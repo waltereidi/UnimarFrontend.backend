@@ -1,0 +1,6 @@
+@UnimarFrontend.backend_HostAddress = http://localhost:5122
+
+GET {{UnimarFrontend.backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
