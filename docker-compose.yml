@@ -1,0 +1,47 @@
+services:
+  unimarfrontend.backend:
+    image: ${DOCKER_REGISTRY-}unimarfrontendbackend
+    build:
+      context: .
+      dockerfile: UnimarFrontend.backend/Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: livrosexpo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      # Caso use EF Core:
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=livrosexpo;Username=postgres;Password=postgres"
+    ports:
+      - "5000:5000"
+    networks:
+      - unimar_network
+
+  postgres:
+    image: postgres:16
+    container_name: postgres_unimar
+    restart: always
+    environment:
+      POSTGRES_DB: livrosexpo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - unimar_network
+    volumes:
+      - ./postgres_config/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./postgres_config/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command: >
+      postgres
+      -c config_file=/etc/postgresql/postgresql.conf
+      -c hba_file=/etc/postgresql/pg_hba.conf
+
+networks:
+  unimar_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
