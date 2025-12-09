@@ -1,7 +1,41 @@
 using Microsoft.EntityFrameworkCore;
 using UnimarFrontend.backend.Context;
+using UnimarFrontend.backend.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using UnimarFrontend.backend.DTO;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+// Bind settings
+builder.Services.Configure<JwtSettingsDTO>(
+    builder.Configuration.GetSection("JwtSettings"));
+
+var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettingsDTO>();
+
+// Add JwtService
+builder.Services.AddSingleton<JwtService>();
+
+// Add Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = jwtSettings.Issuer,
+            ValidAudience = jwtSettings.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwtSettings.Key)
+            )
+        };
+    });
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
