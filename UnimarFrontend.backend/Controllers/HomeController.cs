@@ -19,7 +19,7 @@ namespace UnimarFrontend.backend.Controllers
             _context = context;
         }
 
-        [HttpGet(Name = "GetBooks")]
+        [HttpGet]
         public IEnumerable<Book> Get(int page)
         {
             var result = _context.Books
@@ -30,7 +30,7 @@ namespace UnimarFrontend.backend.Controllers
             return result;
         }
         [Authorize]
-        [HttpPost(Name = "CreateComment")]
+        [HttpPost]
         public IActionResult CreateComment([FromBody] BookComment bc)
         {
             _context.BookComments.Add(bc);

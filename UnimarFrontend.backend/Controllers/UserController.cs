@@ -14,15 +14,15 @@ namespace UnimarFrontend.backend.Controllers
     {
         private readonly ILogger<UserController> _logger;
         private readonly AppDbContext _context;
-        private readonly JwtSettingsDTO _jwtSettings;
-        public UserController(ILogger<UserController> logger, AppDbContext context, JwtSettingsDTO jwtSettings )
+        private readonly JwtService _jwtService;
+        public UserController(ILogger<UserController> logger, AppDbContext context, JwtService jwtService)
         {
             _logger = logger;
             _context = context;
-            _jwtSettings = jwtSettings;
+            _jwtService = jwtService;
         }
-        [HttpPost(Name = "CreateUser")]
-        public ActionResult CreateUser(CreateUserDTO.Request request)
+        [HttpPost("CreateUser")]
+        public ActionResult CreateUser([FromBody] CreateUserDTO.Request request)
         {
             var entity = request.ToUserEntity();
             
@@ -33,8 +33,9 @@ namespace UnimarFrontend.backend.Controllers
                 ? Created() 
                 : UnprocessableEntity();
         }
-        [HttpPost(Name = "Authentication")]
-        public ActionResult Authentication(AuthenticationDTO.Request request)
+        
+        [HttpPost("Authentication")]
+        public ActionResult Authentication([FromBody]AuthenticationDTO.Request request)
         {
             var user = _context.Users
                 .FirstOrDefault(u => u.Email.Value == request.Email);
@@ -44,9 +45,9 @@ namespace UnimarFrontend.backend.Controllers
             {
                 return Unauthorized();
             }
-            var jwtService = new JwtService(_jwtSettings);
+            var result = _jwtService.GenerateToken(user.Id.ToString(), user.Email.Value);
 
-            return Ok();
+            return Ok(result);
         }
     }
 }
