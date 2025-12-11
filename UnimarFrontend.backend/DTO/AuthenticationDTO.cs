@@ -10,6 +10,8 @@
         public class Response
         {
             public string JwtToken { get; set; }
+            public string Message { get; set; }
+            public string Nome { get; set; }
         }
 
     }

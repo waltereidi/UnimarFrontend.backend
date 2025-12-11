@@ -5,6 +5,7 @@ using UnimarFrontend.backend.Context;
 using UnimarFrontend.backend.DTO;
 using UnimarFrontend.backend.ValueObjects;
 using UnimarFrontend.backend.Service;
+using System.Diagnostics;
 
 namespace UnimarFrontend.backend.Controllers
 {
@@ -35,7 +36,7 @@ namespace UnimarFrontend.backend.Controllers
         }
         
         [HttpPost("Authentication")]
-        public ActionResult Authentication([FromBody]AuthenticationDTO.Request request)
+        public AuthenticationDTO.Response Authentication([FromBody]AuthenticationDTO.Request request)
         {
             var user = _context.Users
                 .FirstOrDefault(u => u.Email.Value == request.Email);
@@ -43,11 +44,25 @@ namespace UnimarFrontend.backend.Controllers
 
             if (user == null || !(user.PasswordHash.Hash ==  password.Hash))
             {
-                return Unauthorized();
+                var result = new AuthenticationDTO.Response(){ 
+                    Message = "Login ou senha inválidos"
+                };
+                HttpContext.Response.StatusCode = 401;
+                return result;
             }
-            var result = _jwtService.GenerateToken(user.Id.ToString(), user.Email.Value);
+            else
+            {
+                var result = new AuthenticationDTO.Response()
+                {
+                    JwtToken = _jwtService.GenerateToken(user.Id.ToString(), user.Email.Value),
+                    Message = "Usuário autenticado com sucesso",
+                    Nome = user.Nome
+                };
+                HttpContext.Response.StatusCode = 200;
+                return result;
+            }
 
-            return Ok(result);
+
         }
     }
 }

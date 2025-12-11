@@ -7,7 +7,15 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 // Bind settings
 builder.Services.Configure<JwtSettingsDTO>(
@@ -67,7 +75,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("AllowFrontend");
 app.ApplyMigrations();
 app.UseHttpsRedirection();
 
