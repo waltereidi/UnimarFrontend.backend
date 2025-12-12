@@ -19,8 +19,8 @@ namespace UnimarFrontend.backend.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public IEnumerable<Book> Get(int page)
+        [HttpGet("GetBooks")]
+        public IEnumerable<Book> GetBooks(int page)
         {
             var result = _context.Books
                 .Skip(page * 5)
@@ -30,7 +30,7 @@ namespace UnimarFrontend.backend.Controllers
             return result;
         }
         [Authorize]
-        [HttpPost]
+        [HttpPost("CreateComment")]
         public IActionResult CreateComment([FromBody] BookComment bc)
         {
             _context.BookComments.Add(bc);
@@ -41,7 +41,7 @@ namespace UnimarFrontend.backend.Controllers
                 : NotFound();
         }
         [Authorize]
-        [HttpDelete]
+        [HttpDelete("DeleteComment")]
         public IActionResult DeleteComment(int id )
         {
             var entity = new BookComment();

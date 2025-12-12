@@ -21,7 +21,7 @@ namespace UnimarFrontend.backend.Data.Migrations
                     BookId = table.Column<int>(type: "integer", nullable: false),
                     Comment = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -34,12 +34,14 @@ namespace UnimarFrontend.backend.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Title = table.Column<string>(type: "text", nullable: false),
-                    Author = table.Column<string>(type: "text", nullable: false),
-                    ISBN = table.Column<string>(type: "text", nullable: false),
-                    ThumNail = table.Column<string>(type: "text", nullable: false),
+                    Title = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Author = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
+                    ISBN = table.Column<string>(type: "character varying(18)", maxLength: 18, nullable: true),
+                    ThumNail = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
+                    DriveUrl = table.Column<string>(type: "character varying(254)", maxLength: 254, nullable: true),
+                    FileSize = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,7 +58,7 @@ namespace UnimarFrontend.backend.Data.Migrations
                     PasswordHash = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     Nome = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
