@@ -12,7 +12,7 @@ namespace UnimarFrontend.backend.Models
         public string? Author { get; set; }
         [MaxLength(18)]
         public string? ISBN { get; set; }
-        [MaxLength(128)]
+        [MaxLength(255)]
         public string? ThumNail { get; set; }
         [MaxLength(254)]
         public string? DriveUrl { get; set; }

@@ -37,7 +37,7 @@ namespace UnimarFrontend.backend.Data.Migrations
                     Title = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Author = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
                     ISBN = table.Column<string>(type: "character varying(18)", maxLength: 18, nullable: true),
-                    ThumNail = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
+                    ThumNail = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     DriveUrl = table.Column<string>(type: "character varying(254)", maxLength: 254, nullable: true),
                     FileSize = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
