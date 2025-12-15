@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using UnimarFrontend.backend.Context;
-using UnimarFrontend.backend.Models;
+using UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades;
+using UnimarFrontend.backend.UnimarFrontend.Infra.Context;
 
 namespace UnimarFrontend.backend.Controllers
 {

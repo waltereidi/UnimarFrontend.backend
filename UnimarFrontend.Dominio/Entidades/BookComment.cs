@@ -1,4 +1,4 @@
-﻿namespace UnimarFrontend.backend.Models
+﻿namespace UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades
 {
     public class BookComment : Entity
     {

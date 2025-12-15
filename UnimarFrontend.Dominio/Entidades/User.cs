@@ -1,6 +1,7 @@
-﻿using UnimarFrontend.backend.ValueObjects;
+﻿
+using UnimarFrontend.backend.ValueObjects;
 
-namespace UnimarFrontend.backend.Models
+namespace UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades
 {
     public class User : Entity
     {

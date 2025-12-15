@@ -1,18 +1,19 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Framework.Tests;
+using FrameworkGoogleApi.Interfaces;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnimarFrontend.GoogleDrive.GoogleDrive.Api;
-using UnimarFrontend.GoogleDrive.Interfaces;
+using UnimarFrontend.backend.GoogleDriveApi.GoogleDrive;
 
 namespace UnimarFrontend.Tests.GoogleTest
 {
     public class GoogleDriveAPITest : Configuration
     {
         private readonly GoogleDriveRead _serviceRead;
-        public GoogleDriveAPITest() : base("UnimarFrontEnd.GoogleDrive", "Configuration")
+        public GoogleDriveAPITest() : base("UnimarFrontEnd.GoogleDriveApi", "Configuration")
         {
             _serviceRead = new GoogleDriveRead();
         }
@@ -24,7 +25,7 @@ namespace UnimarFrontend.Tests.GoogleTest
             var result3 = _serviceRead.GetDriveFiles();
             var result4 = _serviceRead.GetDriveFiles();
 
-            Assert.NotNull(result);
+            Assert.NotNull(result2);
         }
         [Fact]
         public void TestDownload()

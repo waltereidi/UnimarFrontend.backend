@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using UnimarFrontend.backend.Context;
 using UnimarFrontend.backend.DTO;
 using UnimarFrontend.backend.ValueObjects;
 using UnimarFrontend.backend.Service;
 using System.Diagnostics;
+using UnimarFrontend.backend.UnimarFrontend.Infra.Context;
 
 namespace UnimarFrontend.backend.Controllers
 {

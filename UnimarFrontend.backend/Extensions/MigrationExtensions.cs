@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using UnimarFrontend.backend.UnimarFrontend.Infra.Context;
 
-namespace UnimarFrontend.backend.Context
+namespace UnimarFrontend.backend.Service.Extensions
 {
     public static class MigrationExtensions
     {

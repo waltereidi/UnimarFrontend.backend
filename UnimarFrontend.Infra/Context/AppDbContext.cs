@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using UnimarFrontend.backend.Models;
+using UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades;
 
-namespace UnimarFrontend.backend.Context
+namespace UnimarFrontend.backend.UnimarFrontend.Infra.Context
 {
     public class AppDbContext : DbContext
     {

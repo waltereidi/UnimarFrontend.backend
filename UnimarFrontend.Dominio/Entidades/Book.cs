@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace UnimarFrontend.backend.Models
+namespace UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades
 {
     public class Book : Entity
     {

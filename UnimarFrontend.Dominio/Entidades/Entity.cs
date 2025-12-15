@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace UnimarFrontend.backend.Models
+namespace UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades
 {
     public class Entity
     {

@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using UnimarFrontend.backend.Context;
 using UnimarFrontend.backend.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using UnimarFrontend.backend.DTO;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using UnimarFrontend.backend.UnimarFrontend.Infra.Context;
+using UnimarFrontend.backend.Service.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
