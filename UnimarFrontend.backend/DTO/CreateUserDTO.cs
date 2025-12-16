@@ -1,4 +1,5 @@
-﻿using UnimarFrontend.backend.Models;
+﻿using UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades;
+using UnimarFrontend.backend.ValueObjects;
 namespace UnimarFrontend.backend.DTO
 {
     public class CreateUserDTO
@@ -11,8 +12,8 @@ namespace UnimarFrontend.backend.DTO
             public User ToUserEntity()
             => new User
                 {
-                    Email = new ValueObjects.EmailVO(this.Email),
-                    PasswordHash = new ValueObjects.PasswordVO(this.Password),
+                    Email = new EmailVO(this.Email),
+                    PasswordHash = new PasswordVO(this.Password),
                     Nome = Name
                 };
         }

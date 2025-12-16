@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades;
 
 namespace UnimarFrontend.backend.UnimarFrontend.Infra.Context
@@ -14,8 +15,36 @@ namespace UnimarFrontend.backend.UnimarFrontend.Infra.Context
         public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            ConfigureUser(modelBuilder);
             base.OnModelCreating(modelBuilder);
+        }
+
+        public void ConfigureUser(ModelBuilder b)
+        {
+            var builder = b.Entity<User>();
+            builder.ToTable("Users");
+            builder.HasKey(u => u.Id);
+
+            // Email VO
+            builder.OwnsOne(u => u.Email, email =>
+            {
+                email.Property(e => e.Value)
+                    .HasColumnName("Email")
+                    .HasMaxLength(200)
+                    .IsRequired();
+            });
+
+            // Password VO
+            builder.OwnsOne(u => u.PasswordHash, password =>
+            {
+                password.Property(p => p.Hash)
+                    .HasColumnName("PasswordHash")
+                    .HasMaxLength(256)
+                    .IsRequired();
+            });
+
+            builder.Property(u => u.CreatedAt)
+                    .IsRequired();
         }
     }
 }
