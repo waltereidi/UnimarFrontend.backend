@@ -7,8 +7,6 @@ namespace UnimarFrontend.backend.ValueObjects
     {
         public string Hash { get; }
 
-        private PasswordVO() { } // EF Core
-
         public PasswordVO(string plainPassword)
         {
             if (string.IsNullOrWhiteSpace(plainPassword))

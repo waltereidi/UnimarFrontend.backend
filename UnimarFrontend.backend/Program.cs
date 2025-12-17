@@ -5,7 +5,6 @@ using UnimarFrontend.backend.DTO;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using UnimarFrontend.backend.UnimarFrontend.Infra.Context;
-using UnimarFrontend.backend.Service.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
@@ -52,7 +51,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 
 builder.Services.AddControllers();
@@ -77,7 +75,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseCors("AllowFrontend");
-app.ApplyMigrations();
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades;
-
 namespace UnimarFrontend.backend.UnimarFrontend.Infra.Context
 {
     public class AppDbContext : DbContext
@@ -21,12 +19,12 @@ namespace UnimarFrontend.backend.UnimarFrontend.Infra.Context
 
         public void ConfigureUser(ModelBuilder b)
         {
-            var builder = b.Entity<User>();
-            builder.ToTable("Users");
-            builder.HasKey(u => u.Id);
+
+            b.Entity<User>().ToTable("Users");
+            b.Entity<User>().HasKey(u => u.Id);
 
             // Email VO
-            builder.OwnsOne(u => u.Email, email =>
+            b.Entity<User>().OwnsOne(u => u.Email, email =>
             {
                 email.Property(e => e.Value)
                     .HasColumnName("Email")
@@ -35,7 +33,7 @@ namespace UnimarFrontend.backend.UnimarFrontend.Infra.Context
             });
 
             // Password VO
-            builder.OwnsOne(u => u.PasswordHash, password =>
+            b.Entity<User>().OwnsOne(u => u.PasswordHash, password =>
             {
                 password.Property(p => p.Hash)
                     .HasColumnName("PasswordHash")
@@ -43,7 +41,7 @@ namespace UnimarFrontend.backend.UnimarFrontend.Infra.Context
                     .IsRequired();
             });
 
-            builder.Property(u => u.CreatedAt)
+            b.Entity<User>().Property(u => u.CreatedAt)
                     .IsRequired();
         }
     }

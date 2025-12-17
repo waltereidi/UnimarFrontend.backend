@@ -15,7 +15,7 @@ namespace UnimarFrontend.Infra.Context
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
             optionsBuilder.UseNpgsql(
-                "Host=localhost;Port=5432;Database=livrosexpo;Username=livrosexpo;Password=livrosexpo"
+                "Host=localhost;Port=5435;Database=livrosexpo;Username=livrosexpo;Password=livrosexpo"
             );
 
             return new AppDbContext(optionsBuilder.Options);

@@ -7,7 +7,7 @@ namespace UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades
     {
 
         [MaxLength(255)]
-        public string Title { get; set; }
+        public required string Title { get; set; }
         [MaxLength(128)]
         public string? Author { get; set; }
         [MaxLength(18)]

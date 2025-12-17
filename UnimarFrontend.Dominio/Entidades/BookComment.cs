@@ -2,8 +2,8 @@
 {
     public class BookComment : Entity
     {
-        public int BookId { get; set; }
-        public string Comment { get; set; }
+        public required int BookId { get; set; }
+        public required string Comment { get; set; }
         
     }
 }

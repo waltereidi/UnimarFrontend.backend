@@ -6,7 +6,6 @@
     {
         public string Value { get; }
 
-        private EmailVO() { } // EF Core
 
         public EmailVO(string value)
         {
