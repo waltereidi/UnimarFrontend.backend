@@ -1,9 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using UnimarFrontend.backend.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using UnimarFrontend.backend.DTO;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Quartz;
 using System.Text;
+using UnimarFrontend.backend.DTO;
+using UnimarFrontend.backend.Jobs;
+using UnimarFrontend.backend.Service;
 using UnimarFrontend.backend.UnimarFrontend.Infra.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,24 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
+builder.Services.AddQuartz(q =>
+{
+    q.UseMicrosoftDependencyInjectionJobFactory();
+
+    var jobConfig = new QuartzScheduller.JobConfiguration(
+        jobName: "ExampleJob",
+        ce: new CronExpression("0 0 0 ? * *") // a cada 5 minutos
+    );
+
+    QuartzScheduller.GetConfiguration<GDriveAtualizarLivrosJob>(q, jobConfig);
+});
+
+// Quartz Hosted Service
+builder.Services.AddQuartzHostedService(options =>
+{
+    options.WaitForJobsToComplete = true;
+});
+
 
 // Bind settings
 builder.Services.Configure<JwtSettingsDTO>(
@@ -63,7 +83,8 @@ builder.Services.AddSwaggerGen(c =>
             .Replace("+", "_")
     );
 });
-
+//Injeção de dependencias 
+builder.Services.AddScoped<BookService>();
 
 var app = builder.Build();
 app.MapControllers();

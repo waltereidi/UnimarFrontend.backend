@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UnimarFrontend.backend\UnimarFrontend.backend.csproj" />
-    <ProjectReference Include="..\UnimarFrontend.GoogleDriveApi\UnimarFrontend.GoogleDriveApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>
