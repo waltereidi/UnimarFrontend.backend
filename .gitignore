@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /UnimarFrontend.GoogleDrive/Configuration/credentials.json
 /UnimarFrontend.GoogleDriveApi/Configuration/credentials.json
+/UnimarFrontend.backend/Configuration/credentials.json
