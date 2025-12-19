@@ -1,12 +1,12 @@
 ﻿using Framework.Tests;
-using FrameworkGoogleApi.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnimarFrontend.backend.GoogleDriveApi.GoogleDrive;
+using UnimarFrontend.backend.GoogleDriveApi;
+using UnimarFrontend.backend.Interfaces;
 
 namespace UnimarFrontend.Tests.GoogleTest
 {

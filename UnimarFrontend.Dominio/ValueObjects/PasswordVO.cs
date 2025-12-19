@@ -32,5 +32,9 @@ namespace UnimarFrontend.backend.ValueObjects
             => obj is PasswordVO other && Hash == other.Hash;
 
         public override int GetHashCode() => Hash.GetHashCode();
+        public static implicit operator string(PasswordVO password)
+        {
+            return password.Hash;
+        }
     }
 }

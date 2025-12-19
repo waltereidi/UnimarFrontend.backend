@@ -6,10 +6,10 @@ namespace UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades
 {
     public class User : Entity
     {
-        public required EmailVO Email { get; set; }
+        public  EmailVO Email { get; set; }
         
-        public required PasswordVO PasswordHash { get; set; }
+        public  PasswordVO PasswordHash { get; set; }
         
-        public required string Nome { get; set; }
+        public  string Nome { get; set; }
     }
 }

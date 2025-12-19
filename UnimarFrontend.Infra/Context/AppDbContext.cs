@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades;
+using UnimarFrontend.backend.ValueObjects;
 namespace UnimarFrontend.backend.UnimarFrontend.Infra.Context
 {
     public class AppDbContext : DbContext
@@ -23,23 +24,17 @@ namespace UnimarFrontend.backend.UnimarFrontend.Infra.Context
             b.Entity<User>().ToTable("Users");
             b.Entity<User>().HasKey(u => u.Id);
 
-            // Email VO
-            b.Entity<User>().OwnsOne(u => u.Email, email =>
-            {
-                email.Property(e => e.Value)
-                    .HasColumnName("Email")
-                    .HasMaxLength(200)
-                    .IsRequired();
-            });
+            b.Entity<User>().Property(u => u.PasswordHash)
+                .HasConversion(
+                    v => v.Hash,
+                    v => new PasswordVO(v)
+                );
 
-            // Password VO
-            b.Entity<User>().OwnsOne(u => u.PasswordHash, password =>
-            {
-                password.Property(p => p.Hash)
-                    .HasColumnName("PasswordHash")
-                    .HasMaxLength(256)
-                    .IsRequired();
-            });
+            b.Entity<User>().Property(u => u.Email)
+                .HasConversion(
+                    v => v.Value,
+                    v => new EmailVO(v)
+                );
 
             b.Entity<User>().Property(u => u.CreatedAt)
                     .IsRequired();
