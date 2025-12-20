@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades;
 using UnimarFrontend.backend.ValueObjects;
+using UnimarFrontend.Dominio.Entidades;
 namespace UnimarFrontend.backend.UnimarFrontend.Infra.Context
 {
     public class AppDbContext : DbContext
@@ -12,6 +13,8 @@ namespace UnimarFrontend.backend.UnimarFrontend.Infra.Context
         public DbSet<Book> Books { get; set; }
         public DbSet<BookComment> BookComments { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<BookGoogleDrive> BookGoogleDrive { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             ConfigureUser(modelBuilder);

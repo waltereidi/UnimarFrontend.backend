@@ -12,7 +12,7 @@ using UnimarFrontend.backend.UnimarFrontend.Infra.Context;
 namespace UnimarFrontend.Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251219223924_InitialCreate")]
+    [Migration("20251220225239_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

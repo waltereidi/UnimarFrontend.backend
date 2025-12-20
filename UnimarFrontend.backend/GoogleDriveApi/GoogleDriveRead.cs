@@ -58,7 +58,7 @@ namespace UnimarFrontend.backend.GoogleDriveApi
             return result.Files;
         }
 
-        public IList<Google.Apis.Drive.v3.Data.File> GetDriveFilesFromCreationDate(DateTime? dataInicio, DateTime? dataFim)
+        public IList<Google.Apis.Drive.v3.Data.File> GetDriveFilesFromCreationDate(DateTime? dataInicio = null , DateTime? dataFim = null )
         {
             if (dataInicio == null && dataFim == null)
                 throw new ArgumentNullException();
