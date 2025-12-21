@@ -21,13 +21,13 @@ builder.Services.AddCors(options =>
 builder.Services.AddQuartz(q =>
 {
     q.UseMicrosoftDependencyInjectionJobFactory();
-
+    
     var jobConfig = new QuartzScheduller.JobConfiguration(
         jobName: "ExampleJob",
-        ce: new CronExpression("0 0 0 ? * *") // a cada 5 minutos
+        ce: new CronExpression("0 0/5 * ? * *")
+        
     );
-
-    QuartzScheduller.GetConfiguration<GDriveAtualizarLivrosJob>(q, jobConfig);
+    QuartzScheduller.GetConfiguration<GDriveAtualizarLivrosJob>(q, jobConfig) ;
 });
 
 // Quartz Hosted Service

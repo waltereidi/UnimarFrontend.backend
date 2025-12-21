@@ -1,6 +1,8 @@
 ﻿using Google.Apis.Drive.v3;
 using Google.Apis.Drive.v3.Data;
 using Google.Apis.Services;
+using System.Security.Cryptography;
+using UglyToad.PdfPig.Tokens;
 using UnimarFrontend.backend.Configuration;
 
 namespace UnimarFrontend.backend.GoogleDriveApi
@@ -21,7 +23,7 @@ namespace UnimarFrontend.backend.GoogleDriveApi
             });
 
             var request = service.Files.List();
-            request.PageSize = 50;
+            request.PageSize = 200;
             request.PageToken = _pageToken;
             return request;
         }
@@ -52,19 +54,20 @@ namespace UnimarFrontend.backend.GoogleDriveApi
         public IEnumerable<Google.Apis.Drive.v3.Data.File> GetDriveFiles()
         {
             var request = GetConfiguredService();
-
+            SetFields(request);
             var result = ExecuteRequest(request);
 
             return result.Files;
         }
-
+        private void SetFields(FilesResource.ListRequest request)
+            => request.Fields = "files(id, name, mimeType, createdTime, modifiedTime, size, parents), nextPageToken";
+            
         public IList<Google.Apis.Drive.v3.Data.File> GetDriveFilesFromCreationDate(DateTime? dataInicio = null , DateTime? dataFim = null )
         {
             if (dataInicio == null && dataFim == null)
                 throw new ArgumentNullException();
-
+                
                 var request = GetConfiguredService();
-
             request.Q = $" trashed = false ";
 
             if (dataInicio != null)
@@ -89,7 +92,8 @@ namespace UnimarFrontend.backend.GoogleDriveApi
             }
 
             request.OrderBy = "createdTime";
-
+            SetFields(request);
+            request.PageToken = _pageToken;
             var fileList = ExecuteRequest(request);
             var result = fileList.Files;
             

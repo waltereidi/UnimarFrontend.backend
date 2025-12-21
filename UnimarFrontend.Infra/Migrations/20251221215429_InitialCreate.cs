@@ -29,6 +29,38 @@ namespace UnimarFrontend.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookFileStorages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FileStorageId = table.Column<int>(type: "integer", nullable: false),
+                    BookId = table.Column<string>(type: "text", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookFileStorages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookGoogleDrive",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    GoogleDriveId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    BookId = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookGoogleDrive", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Books",
                 columns: table => new
                 {
@@ -71,6 +103,12 @@ namespace UnimarFrontend.Infra.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BookComments");
+
+            migrationBuilder.DropTable(
+                name: "BookFileStorages");
+
+            migrationBuilder.DropTable(
+                name: "BookGoogleDrive");
 
             migrationBuilder.DropTable(
                 name: "Books");

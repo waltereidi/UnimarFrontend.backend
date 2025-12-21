@@ -13,8 +13,8 @@ namespace UnimarFrontend.backend.DTO
             var books  = files.Select(s => {
                 var book = new Book()
                 {
-                    Title = s.OriginalFilename,
-                    ThumNail = ExchangeExtension(s.OriginalFilename),
+                    Title = s.Name,
+                    ThumNail = ExchangeExtension(s.Name),
                     CreatedAt = s.CreatedTime == null ? DateTime.MinValue : s.CreatedTime.Value,
                     DriveUrl = s.WebContentLink
 
@@ -26,8 +26,8 @@ namespace UnimarFrontend.backend.DTO
             if(BooksDrive == null )
             {
                 BooksDrive = books;
-            }
-            BooksDrive.AddRange(books);
+            } else
+                BooksDrive.AddRange(books);
         }
         public string ExchangeExtension(string str)
             => str.Replace(".pdf", ".jpg");

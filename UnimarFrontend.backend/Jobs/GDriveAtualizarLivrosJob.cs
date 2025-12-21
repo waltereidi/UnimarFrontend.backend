@@ -18,8 +18,11 @@ namespace UnimarFrontend.backend.Jobs
 
         public async Task Execute(IJobExecutionContext context)
         {
-            _logger.LogInformation("Executando GDriveAtualizarLivrosJob às {time}", DateTime.Now);
-
+            Console.WriteLine("===========================QUARTZ===============================");
+            Console.WriteLine("Execute");
+            var lastBook = _service.GetLastBook();
+            await _service.AddBookRange(lastBook);
+            Console.WriteLine("Execute end");
             // exemplo de uso
             // await _service.AtualizarLivrosAsync();
         }
