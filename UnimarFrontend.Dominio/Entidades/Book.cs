@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using UnimarFrontend.Dominio.Entidades;
 
 namespace UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades
 {
@@ -18,6 +19,8 @@ namespace UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades
         public string? DriveUrl { get; set; }
         [MaxLength(10)]
         public string? FileSize { get; set; }
-
+        public virtual List<BookGoogleDrive> BookGoogleDrives { get; set; }
+        public virtual List<BookFileStorage> BookFileStorages { get; set; }
+        public virtual List<BookComment> BookComments { get; set; }
     }
 }

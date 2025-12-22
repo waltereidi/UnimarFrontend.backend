@@ -10,7 +10,7 @@ namespace UnimarFrontend.Dominio.Entidades
     public class BookFileStorage : Entity
     {
         public int FileStorageId { get; set; }
-        public string BookId { get; set; }
-
+        public int BookId { get; set; }
+        public virtual Book Book { get; set; }
     }
 }

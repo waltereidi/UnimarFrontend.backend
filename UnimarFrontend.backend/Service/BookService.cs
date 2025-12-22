@@ -41,6 +41,7 @@ namespace UnimarFrontend.backend.Service
             var books = dto.BooksDrive.Select(s => s.book);
             Console.WriteLine("AddBookRange42");
             await _dbContext.Books.AddRangeAsync(books );
+            await _dbContext.SaveChangesAsync();
 
             var bookDrives = books.Join( dto.BooksDrive , 
                 b=> b.Title, 
@@ -85,6 +86,6 @@ namespace UnimarFrontend.backend.Service
             }
             return dto;
         }
-        
+
     }
 }

@@ -30,9 +30,8 @@ namespace UnimarFrontend.Infra.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("BookId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("BookId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -45,7 +44,9 @@ namespace UnimarFrontend.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BookFileStorages");
+                    b.HasIndex("BookId");
+
+                    b.ToTable("BookFileStorages", (string)null);
                 });
 
             modelBuilder.Entity("UnimarFrontend.Dominio.Entidades.BookGoogleDrive", b =>
@@ -72,7 +73,9 @@ namespace UnimarFrontend.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BookGoogleDrive");
+                    b.HasIndex("BookId");
+
+                    b.ToTable("BookGoogleDrive", (string)null);
                 });
 
             modelBuilder.Entity("UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades.Book", b =>
@@ -116,7 +119,7 @@ namespace UnimarFrontend.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades.BookComment", b =>
@@ -127,12 +130,11 @@ namespace UnimarFrontend.Infra.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BookId")
+                    b.Property<int?>("BookCommentId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("BookId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -140,9 +142,18 @@ namespace UnimarFrontend.Infra.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.ToTable("BookComments");
+                    b.HasIndex("BookCommentId");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("BookComments", (string)null);
                 });
 
             modelBuilder.Entity("UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades.User", b =>
@@ -174,6 +185,70 @@ namespace UnimarFrontend.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("UnimarFrontend.Dominio.Entidades.BookFileStorage", b =>
+                {
+                    b.HasOne("UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades.Book", "Book")
+                        .WithMany("BookFileStorages")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("UnimarFrontend.Dominio.Entidades.BookGoogleDrive", b =>
+                {
+                    b.HasOne("UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades.Book", "Book")
+                        .WithMany("BookGoogleDrives")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades.BookComment", b =>
+                {
+                    b.HasOne("UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades.BookComment", null)
+                        .WithMany("BookComments")
+                        .HasForeignKey("BookCommentId");
+
+                    b.HasOne("UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades.Book", "Book")
+                        .WithMany("BookComments")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades.User", "User")
+                        .WithMany("BookComments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades.Book", b =>
+                {
+                    b.Navigation("BookComments");
+
+                    b.Navigation("BookFileStorages");
+
+                    b.Navigation("BookGoogleDrives");
+                });
+
+            modelBuilder.Entity("UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades.BookComment", b =>
+                {
+                    b.Navigation("BookComments");
+                });
+
+            modelBuilder.Entity("UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades.User", b =>
+                {
+                    b.Navigation("BookComments");
                 });
 #pragma warning restore 612, 618
         }

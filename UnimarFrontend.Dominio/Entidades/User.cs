@@ -11,5 +11,6 @@ namespace UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades
         public  PasswordVO PasswordHash { get; set; }
         
         public  string Nome { get; set; }
+        public virtual List<BookComment> BookComments { get; set; }
     }
 }

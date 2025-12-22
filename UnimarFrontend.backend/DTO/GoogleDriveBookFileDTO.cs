@@ -19,7 +19,7 @@ namespace UnimarFrontend.backend.DTO
                     DriveUrl = s.WebContentLink
 
                 };
-                return new BookDrive(book , s.DriveId);
+                return new BookDrive(book , s.Id);
             })
             .ToList();
 

@@ -11,5 +11,6 @@ namespace UnimarFrontend.Dominio.Entidades
         [MaxLength(255)]
         public string GoogleDriveId { get; set; }
         public int BookId { get; set; }
+        public virtual Book Book { get; set; }
     }
 }
