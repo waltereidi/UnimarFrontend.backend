@@ -46,6 +46,8 @@ namespace UnimarFrontend.Infra.Migrations
 
                     b.HasIndex("BookId");
 
+                    b.HasIndex("FileStorageId");
+
                     b.ToTable("BookFileStorages", (string)null);
                 });
 
@@ -76,6 +78,35 @@ namespace UnimarFrontend.Infra.Migrations
                     b.HasIndex("BookId");
 
                     b.ToTable("BookGoogleDrive", (string)null);
+                });
+
+            modelBuilder.Entity("UnimarFrontend.Dominio.Entidades.FileStorage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("OriginalFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FileStorage");
                 });
 
             modelBuilder.Entity("UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades.Book", b =>
@@ -195,7 +226,15 @@ namespace UnimarFrontend.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("UnimarFrontend.Dominio.Entidades.FileStorage", "FileStorage")
+                        .WithMany("BookFileStorages")
+                        .HasForeignKey("FileStorageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Book");
+
+                    b.Navigation("FileStorage");
                 });
 
             modelBuilder.Entity("UnimarFrontend.Dominio.Entidades.BookGoogleDrive", b =>
@@ -230,6 +269,11 @@ namespace UnimarFrontend.Infra.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("UnimarFrontend.Dominio.Entidades.FileStorage", b =>
+                {
+                    b.Navigation("BookFileStorages");
                 });
 
             modelBuilder.Entity("UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades.Book", b =>

@@ -87,5 +87,21 @@ namespace UnimarFrontend.backend.Service
             return dto;
         }
 
+        public List<Book> GetBookWithouthThumbNail()
+        {
+            var result = _dbContext.Books
+                .Where(x => x.BookFileStorages == null)
+                .Take(20)
+                .ToList();
+            return result;
+        }
+
+        public void GenerateThumbNail(List<Book> result)
+        {
+            //result.ForEach(f => {
+            //    var pdf = f.DownloadBook(f.);
+            
+            //});
+        }
     }
 }

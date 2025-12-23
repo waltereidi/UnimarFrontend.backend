@@ -13,6 +13,7 @@ namespace UnimarFrontend.Dominio.Entidades
         public string FilePath { get; set; }
         [MaxLength(255)]
         public string OriginalFileName { get; set; }
+        public virtual List<BookFileStorage> BookFileStorages { get; set; }
 
     }
 }

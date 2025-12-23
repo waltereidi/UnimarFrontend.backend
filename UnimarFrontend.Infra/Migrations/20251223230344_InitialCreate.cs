@@ -33,6 +33,22 @@ namespace UnimarFrontend.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FileStorage",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FilePath = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    OriginalFileName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileStorage", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -47,6 +63,28 @@ namespace UnimarFrontend.Infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookGoogleDrive",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    GoogleDriveId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    BookId = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookGoogleDrive", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookGoogleDrive_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,26 +107,10 @@ namespace UnimarFrontend.Infra.Migrations
                         principalTable: "Books",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BookGoogleDrive",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    GoogleDriveId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    BookId = table.Column<int>(type: "integer", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BookGoogleDrive", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BookGoogleDrive_Books_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Books",
+                        name: "FK_BookFileStorages_FileStorage_FileStorageId",
+                        column: x => x.FileStorageId,
+                        principalTable: "FileStorage",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -148,6 +170,11 @@ namespace UnimarFrontend.Infra.Migrations
                 column: "BookId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BookFileStorages_FileStorageId",
+                table: "BookFileStorages",
+                column: "FileStorageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BookGoogleDrive_BookId",
                 table: "BookGoogleDrive",
                 column: "BookId");
@@ -167,6 +194,9 @@ namespace UnimarFrontend.Infra.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "FileStorage");
 
             migrationBuilder.DropTable(
                 name: "Books");

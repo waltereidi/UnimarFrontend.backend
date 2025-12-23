@@ -15,6 +15,8 @@ namespace UnimarFrontend.backend.UnimarFrontend.Infra.Context
         public DbSet<User> Users { get; set; }
         public DbSet<BookGoogleDrive> BookGoogleDrive { get; set; }
         public DbSet<BookFileStorage> BookFileStorages { get; set; }
+        public DbSet<FileStorage> FileStorage { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             ConfigureUser(modelBuilder);
@@ -36,6 +38,24 @@ namespace UnimarFrontend.backend.UnimarFrontend.Infra.Context
             b.Entity<BookFileStorage>()
                 .Property(fs => fs.BookId)
                 .IsRequired();
+
+            b.Entity<BookFileStorage>()
+                .Property(fs => fs.FileStorageId)
+                .IsRequired();
+
+            // Book 1:N BookFileStorage
+            b.Entity<BookFileStorage>()
+                .HasOne(fs => fs.Book)
+                .WithMany(bk => bk.BookFileStorages)
+                .HasForeignKey(fs => fs.BookId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // FileStorage 1:N BookFileStorage
+            b.Entity<BookFileStorage>()
+                .HasOne(fs => fs.FileStorage)
+                .WithMany(f => f.BookFileStorages)
+                .HasForeignKey(fs => fs.FileStorageId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         private void NormalizeDateTimes()

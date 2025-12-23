@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Quartz;
 using System.Linq;
+using UnimarFrontend.backend.Service;
 using UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades;
 using UnimarFrontend.backend.UnimarFrontend.Infra.Context;
 
@@ -11,15 +12,13 @@ namespace UnimarFrontend.backend.Controllers
     [Route("[controller]")]
     public class HomeController : ControllerBase
     {
-        private readonly IScheduler _scheduler;
         private readonly ILogger<HomeController> _logger;
         private readonly AppDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger, AppDbContext context , IScheduler scheduler)
+        public HomeController(ILogger<HomeController> logger, AppDbContext context )
         {
             _logger = logger;
             _context = context;
-            _scheduler = scheduler;
         }
 
         [HttpGet("GetBooks")]
@@ -57,14 +56,16 @@ namespace UnimarFrontend.backend.Controllers
                 ? Ok() 
                 : NotFound();
         }
-        [HttpPost("start")]
-        public async Task<IActionResult> Start()
-        {
-            if (_scheduler.IsStarted)
-                return Ok("Quartz já está em execução.");
 
-            await _scheduler.Start();
-            return Ok("Quartz iniciado com sucesso.");
+        [HttpGet("TestORM")]
+        public object TestORM()
+        {
+            var result = _context.Books.ToList();
+            var _service = new BookService(_context);
+            var resultd = _service.GetBookWithouthThumbNail();
+            var res = _context.BookFileStorages.ToList();
+            var res3 = _context.FileStorage.ToList();
+            return result.First();
         }
     }
 }

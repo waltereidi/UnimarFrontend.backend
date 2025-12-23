@@ -22,11 +22,15 @@ namespace UnimarFrontend.backend.Jobs
         {
             //Console.WriteLine("===========================QUARTZ===============================");
             //Console.WriteLine("Execute");
+            var result = _service.GetBookWithouthThumbNail();
+            _service.GenerateThumbNail(result);
+
             //var lastBook = _service.GetBookWithouthThumbNail();
             //await _service.AddBookRange(lastBook);
             //Console.WriteLine("Execute end");
             //// exemplo de uso
             //// await _service.AtualizarLivrosAsync();
+            
         }
     }
 }

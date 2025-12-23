@@ -12,5 +12,6 @@ namespace UnimarFrontend.Dominio.Entidades
         public int FileStorageId { get; set; }
         public int BookId { get; set; }
         public virtual Book Book { get; set; }
+        public virtual FileStorage FileStorage { get; set; }
     }
 }
