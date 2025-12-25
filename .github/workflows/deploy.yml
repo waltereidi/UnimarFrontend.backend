@@ -1,4 +1,4 @@
-name: Deploy Local Runner .NET 10
+name: Deploy Local Runner .NET 8
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   build_and_deploy:
-    name: Build & Deploy (.NET 10)
+    name: Build & Deploy (.NET 8)
     runs-on: self-hosted
     environment: production
 
@@ -19,38 +19,29 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Configurar .NET 10 (local runner)
+      - name: Configurar .NET 8
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.x'
-          install-dir: ${{ runner.temp }}/dotnet
-
-      - name: Adicionar dotnet ao PATH
-        run: echo "${{ runner.temp }}/dotnet" >> $GITHUB_PATH
-
-      - name: Verificar versão do .NET
-        run: dotnet --info
+          dotnet-version: '8.0.x'
 
       - name: Restaurar dependências
         run: dotnet restore
 
       - name: Compilar solução
         run: dotnet build --configuration Release --no-restore
-
       - name: Publicar aplicação
         run: dotnet publish -c Release -o ./publish
 
       - name: Deploy local
         env:
-          DEPLOY_PATH: ${{ vars.PATH }}   # variável do GitHub
+          DEPLOY_PATH: ${{ vars.PATH }}   # ✅ vindo das variáveis do GitHub
         run: |
           echo "Iniciando deploy local..."
-          echo "Usando diretório: $DEPLOY_PATH"
 
+          echo "Usando diretório: $DEPLOY_PATH"
           sudo mkdir -p "$DEPLOY_PATH"
           sudo cp -r ./publish/* "$DEPLOY_PATH/"
 
           echo "Reiniciando serviço..."
           sudo systemctl restart dotnet-app.service
-
           echo "✅ Deploy finalizado com sucesso!"
