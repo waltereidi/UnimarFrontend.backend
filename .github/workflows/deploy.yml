@@ -13,42 +13,35 @@ jobs:
     runs-on: self-hosted
     environment: production
 
-    env:
-      DOTNET_INSTALL_DIR: $HOME/.dotnet
-      PATH: $HOME/.dotnet:$PATH
-
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Configurar .NET 8
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
-
-      - name: Verificar SDK instalado
-        run: dotnet --info
+          dotnet-version: '8.0.x' 
 
       - name: Restaurar dependências
         run: dotnet restore
 
       - name: Compilar solução
         run: dotnet build --configuration Release --no-restore
-
       - name: Publicar aplicação
         run: dotnet publish -c Release -o ./publish
 
       - name: Deploy local
         env:
-          DEPLOY_PATH: ${{ vars.PATH }} # variável do GitHub Environment
+          DEPLOY_PATH: ${{ vars.PATH }}   # ✅ vindo das variáveis do GitHub
         run: |
           echo "Iniciando deploy local..."
-          echo "Usando diretório: $DEPLOY_PATH"
 
+          echo "Usando diretório: $DEPLOY_PATH"
           sudo mkdir -p "$DEPLOY_PATH"
           sudo cp -r ./publish/* "$DEPLOY_PATH/"
 
           echo "Reiniciando serviço..."
           sudo systemctl restart dotnet-app.service
-
           echo "✅ Deploy finalizado com sucesso!"
