@@ -22,5 +22,6 @@ namespace UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades
         public virtual List<BookGoogleDrive> BookGoogleDrives { get; set; }
         public virtual List<BookFileStorage> BookFileStorages { get; set; }
         public virtual List<BookComment> BookComments { get; set; }
+        public Book() { }
     }
 }

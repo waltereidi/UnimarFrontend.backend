@@ -6,16 +6,27 @@ using UnimarFrontend.backend.GoogleDriveApi;
 using UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades;
 using UnimarFrontend.backend.UnimarFrontend.Infra.Context;
 using UnimarFrontend.Dominio.Entidades;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace UnimarFrontend.backend.Service
 {
     public class BookService
     {
         private readonly AppDbContext _dbContext;
+        private readonly IConfiguration _configuration;
 
         public BookService(AppDbContext dbContext)
         {
             _dbContext = dbContext;
+
+
+            _configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("appsettings.Development.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
+
+
         }
 
         
@@ -87,21 +98,43 @@ namespace UnimarFrontend.backend.Service
             return dto;
         }
 
-        public List<Book> GetBookWithouthThumbNail()
+        public Book GetBookWithouthThumbNail()
         {
             var result = _dbContext.Books
-                .Where(x => x.BookFileStorages == null)
-                .Take(20)
-                .ToList();
+                .Where(b => !b.BookFileStorages.Any())
+                .Include(b => b.BookGoogleDrives)
+                .FirstOrDefault();
+
             return result;
         }
 
-        public void GenerateThumbNail(List<Book> result)
+        public void GenerateThumbNail(Book book)
         {
-            //result.ForEach(f => {
-            //    var pdf = f.DownloadBook(f.);
+            var config = _configuration.GetSection("FileStorage").GetChildren();
+            var path = config.ElementAt(0).Value;
+
+            var pathThumbnail = config.ElementAt(1).Value;
+            if (string.IsNullOrEmpty(path) || string.IsNullOrEmpty(pathThumbnail))
+            {
+                Console.WriteLine("PdfPig não está configurado");
+                throw new Exception($"PdfPig não está configurado {nameof(path)}");
+            }
             
-            //});
+            var pdfPigService = new PdfPigThumbNail();
+
+            var bgd = book.BookGoogleDrives.FirstOrDefault();
+            var gservice = new GoogleDriveDownload(bgd.GoogleDriveId, book.ThumNail, path);
+            var file = gservice.Start();
+            pdfPigService.GetPdfPage(file, new DirectoryInfo(pathThumbnail), book.Title);
+        }
+
+        public List<string> GetTest()
+        {
+            var config = _configuration.GetSection("FileStorage").GetChildren();
+            var path = config.ElementAt(0).Value;
+            
+            var pathThumbnail = config.ElementAt(1).Value;
+            return new List<string>() { path, pathThumbnail };
         }
     }
 }

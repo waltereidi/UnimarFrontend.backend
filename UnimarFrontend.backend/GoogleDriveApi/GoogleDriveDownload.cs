@@ -1,6 +1,7 @@
 ﻿
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
+using Microsoft.AspNetCore.Routing.Constraints;
 using UnimarFrontend.backend.Configuration;
 using UnimarFrontend.backend.Interfaces;
 
@@ -16,6 +17,10 @@ namespace UnimarFrontend.backend.GoogleDriveApi
         public GoogleDriveDownload(Google.Apis.Drive.v3.Data.File file , DirectoryInfo output)
         {
             _request = new DownloadRequest(file.Id , file.Name , output );
+        }
+        public GoogleDriveDownload(string fileId , string fileName , string output )
+        {
+            _request = new DownloadRequest(fileId , fileName , new DirectoryInfo(output) );
         }
 
         public FileInfo Start()

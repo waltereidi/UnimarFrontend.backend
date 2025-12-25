@@ -3,14 +3,14 @@ using UnimarFrontend.backend.Service;
 
 namespace UnimarFrontend.backend.Jobs
 {
-    public class GenerateThumbNail : IJob
+    public class GenerateThumbNailJob : IJob
     {
 
-        private readonly ILogger<GenerateThumbNail> _logger;
+        private readonly ILogger<GenerateThumbNailJob> _logger;
         private readonly BookService _service;
 
-        public GenerateThumbNail(
-            ILogger<GenerateThumbNail> logger,
+        public GenerateThumbNailJob(
+            ILogger<GenerateThumbNailJob> logger,
             BookService service
         )
         {

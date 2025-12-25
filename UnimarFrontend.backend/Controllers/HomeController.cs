@@ -65,6 +65,9 @@ namespace UnimarFrontend.backend.Controllers
             var resultd = _service.GetBookWithouthThumbNail();
             var res = _context.BookFileStorages.ToList();
             var res3 = _context.FileStorage.ToList();
+            var resultds =_service.GetTest();
+            var d1 = new DirectoryInfo(resultds.ElementAt(0));
+            var d2 = new DirectoryInfo(resultds.ElementAt(1));
             return result.First();
         }
     }

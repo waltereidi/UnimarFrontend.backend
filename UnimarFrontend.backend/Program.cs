@@ -36,7 +36,6 @@ builder.Services.AddQuartzHostedService(options =>
     options.WaitForJobsToComplete = true;
 });
 
-
 // Bind settings
 builder.Services.Configure<JwtSettingsDTO>(
     builder.Configuration.GetSection("JwtSettings"));
