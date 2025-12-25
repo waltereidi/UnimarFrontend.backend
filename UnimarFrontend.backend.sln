@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnimarFrontend.Infra", "Uni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnimarFrontend.Dominio", "UnimarFrontend.Dominio\UnimarFrontend.Dominio.csproj", "{8B932E9B-78D1-48F5-96F6-7BDD9B1B3FD2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{F151C3EB-4ABA-417E-B39A-3A7CABDA5B31}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{7367061C-6D10-4F7C-A82B-56FFF604EE41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +40,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7367061C-6D10-4F7C-A82B-56FFF604EE41} = {F151C3EB-4ABA-417E-B39A-3A7CABDA5B31}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82D9604E-F736-4218-BF02-016797F21C9E}

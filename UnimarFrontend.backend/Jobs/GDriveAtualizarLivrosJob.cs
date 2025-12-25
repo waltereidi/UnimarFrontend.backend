@@ -21,6 +21,7 @@ namespace UnimarFrontend.backend.Jobs
             Console.WriteLine("===========================QUARTZ===============================");
             Console.WriteLine("Execute");
             var lastBook = _service.GetLastBook();
+            
             await _service.AddBookRange(lastBook);
             Console.WriteLine("Execute end");
             // exemplo de uso

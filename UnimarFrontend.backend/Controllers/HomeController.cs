@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Quartz;
 using System.Linq;
 using UnimarFrontend.backend.Service;
@@ -25,8 +26,11 @@ namespace UnimarFrontend.backend.Controllers
         public IEnumerable<Book> GetBooks(int page)
         {
             var result = _context.Books
+                .Include(b => b.BookComments)
+                .Include(b => b.BookFileStorages)
                 .Skip(page * 5)
                 .Take(5)
+                .OrderByDescending(o=>o.CreatedAt )
                 .ToList();
 
             return result;

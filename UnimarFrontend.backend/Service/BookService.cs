@@ -45,11 +45,12 @@ namespace UnimarFrontend.backend.Service
         }
         public async Task<int> AddBookRange(DateTime lastBookTime )
         {
-            Console.WriteLine("===========================QUARTZ===============================");
-            Console.WriteLine("AddBookRange");
             var dto = GetFilesFromDrive(lastBookTime);
 
             var books = dto.BooksDrive.Select(s => s.book);
+            if (books != null && books.Count() == 0)
+                return 0;
+
             Console.WriteLine("AddBookRange42");
             await _dbContext.Books.AddRangeAsync(books );
             await _dbContext.SaveChangesAsync();
@@ -103,6 +104,7 @@ namespace UnimarFrontend.backend.Service
             var result = _dbContext.Books
                 .Where(b => !b.BookFileStorages.Any())
                 .Include(b => b.BookGoogleDrives)
+                .OrderByDescending(b => b.CreatedAt)
                 .FirstOrDefault();
 
             return result;
@@ -123,9 +125,51 @@ namespace UnimarFrontend.backend.Service
             var pdfPigService = new PdfPigThumbNail();
 
             var bgd = book.BookGoogleDrives.FirstOrDefault();
-            var gservice = new GoogleDriveDownload(bgd.GoogleDriveId, book.ThumNail, path);
+            var gservice = new GoogleDriveDownload(bgd.GoogleDriveId, book.Title, path);
             var file = gservice.Start();
-            pdfPigService.GetPdfPage(file, new DirectoryInfo(pathThumbnail), book.Title);
+            if(file.Exists)
+            {
+                var fileStorage = new FileStorage
+                {
+                    FilePath = file.FullName,
+                    OriginalFileName = file.Name,
+                    CreatedAt = DateTime.Now,
+                };
+
+                _dbContext.FileStorage.Add(fileStorage);
+                _dbContext.SaveChanges();
+
+                var bookFileStorage = new BookFileStorage
+                {
+                    BookId = book.Id,
+                    FileStorageId = fileStorage.Id,
+                };
+                _dbContext.BookFileStorages.Add(bookFileStorage);
+                _dbContext.SaveChanges();
+
+            }
+            var thumb= pdfPigService.GetPdfPage(file, new DirectoryInfo(pathThumbnail));
+            if(thumb.Exists)
+            {
+                var fileStorageThumb = new FileStorage
+                {
+                    FilePath = thumb.FullName,
+                    OriginalFileName = thumb.Name,
+                    CreatedAt = DateTime.Now,
+                };
+                _dbContext.FileStorage.Add(fileStorageThumb);
+                _dbContext.SaveChanges();
+
+                var bookFileStorageThumb = new BookFileStorage
+                {
+                    BookId = book.Id,
+                    FileStorageId = fileStorageThumb.Id,
+                };
+                _dbContext.BookFileStorages.Add(bookFileStorageThumb);
+                _dbContext.SaveChanges();
+            }
+
+
         }
 
         public List<string> GetTest()

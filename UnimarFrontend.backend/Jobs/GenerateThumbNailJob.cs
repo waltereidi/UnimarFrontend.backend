@@ -23,7 +23,9 @@ namespace UnimarFrontend.backend.Jobs
             //Console.WriteLine("===========================QUARTZ===============================");
             //Console.WriteLine("Execute");
             var result = _service.GetBookWithouthThumbNail();
-            _service.GenerateThumbNail(result);
+            if (result == null)
+                return;
+           _service.GenerateThumbNail(result);
 
             //var lastBook = _service.GetBookWithouthThumbNail();
             //await _service.AddBookRange(lastBook);

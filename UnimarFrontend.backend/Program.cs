@@ -23,11 +23,19 @@ builder.Services.AddQuartz(q =>
     q.UseMicrosoftDependencyInjectionJobFactory();
     
     var jobConfig = new QuartzScheduller.JobConfiguration(
-        jobName: "ExampleJob",
-        ce: new CronExpression("0 0/5 * ? * *")
-        
+        jobName: "AdicionarLivrosJob",
+        ce: new CronExpression("0 0 0 ? * *")
+
     );
     QuartzScheduller.GetConfiguration<GDriveAtualizarLivrosJob>(q, jobConfig) ;
+
+
+    var jobConfig2 = new QuartzScheduller.JobConfiguration(
+        jobName: "GerarThumbJob",
+        ce: new CronExpression("0 0/5 * ? * *")
+
+    );
+    QuartzScheduller.GetConfiguration<GenerateThumbNailJob>(q, jobConfig2);
 });
 
 // Quartz Hosted Service
