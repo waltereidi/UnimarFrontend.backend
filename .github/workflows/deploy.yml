@@ -28,10 +28,10 @@ jobs:
         run: dotnet restore UnimarFrontend.sln
 
       - name: Compilar solução
-        run: dotnet build UnimarFrontend.sln --configuration Release --no-restore
+        run: dotnet build UnimarFrontend.backend.sln --configuration Release --no-restore
 
       - name: Publicar aplicação
-        run: dotnet publish UnimarFrontend.sln -c Release -o ./publish
+        run: dotnet publish UnimarFrontend.backend.sln -c Release -o ./publish
 
 
       - name: Compilar solução
