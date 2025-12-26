@@ -28,10 +28,10 @@ jobs:
         run: dotnet restore UnimarFrontend.backend.sln
 
       - name: Compilar solução
-        run: dotnet build --configuration Release --no-restore
-      - name: Publicar aplicação
-        run: dotnet publish -c Release -o ./publish
+        run: dotnet build UnimarFrontend.backend.sln --configuration Release --no-restore
 
+      - name: Publicar aplicação
+        run: dotnet publish UnimarFrontend.backend.sln -c Release -o ./publish
       - name: Deploy local
         env:
           DEPLOY_PATH: ${{ vars.PATH }}   # ✅ vindo das variáveis do GitHub
