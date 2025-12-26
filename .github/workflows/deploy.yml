@@ -25,7 +25,7 @@ jobs:
           dotnet-version: '8.0.x' 
 
       - name: Restaurar dependências
-        run: dotnet restore UnimarFrontend.sln
+        run: dotnet restore UnimarFrontend.backend.sln
 
       - name: Compilar solução
         run: dotnet build UnimarFrontend.backend.sln --configuration Release --no-restore
