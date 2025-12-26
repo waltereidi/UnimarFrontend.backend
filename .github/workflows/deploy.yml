@@ -25,7 +25,14 @@ jobs:
           dotnet-version: '8.0.x' 
 
       - name: Restaurar dependências
-        run: dotnet restore
+        run: dotnet restore UnimarFrontend.sln
+
+      - name: Compilar solução
+        run: dotnet build UnimarFrontend.sln --configuration Release --no-restore
+
+      - name: Publicar aplicação
+        run: dotnet publish UnimarFrontend.sln -c Release -o ./publish
+
 
       - name: Compilar solução
         run: dotnet build --configuration Release --no-restore
