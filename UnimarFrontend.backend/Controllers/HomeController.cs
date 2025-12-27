@@ -6,7 +6,7 @@ using System.Linq;
 using UnimarFrontend.backend.Service;
 using UnimarFrontend.backend.UnimarFrontend.Dominio.Entidades;
 using UnimarFrontend.backend.UnimarFrontend.Infra.Context;
-
+using Serilog;
 namespace UnimarFrontend.backend.Controllers
 {
     [ApiController]

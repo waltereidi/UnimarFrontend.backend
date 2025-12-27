@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Quartz;
+using Serilog;
 using System.Text;
 using UnimarFrontend.backend.DTO;
 using UnimarFrontend.backend.Jobs;
@@ -27,6 +28,7 @@ builder.Services.AddQuartz(q =>
          ce: new CronExpression("0 0/5 * ? * *")
 
     );
+
     QuartzScheduller.GetConfiguration<GDriveAtualizarLivrosJob>(q, jobConfig) ;
 
 
@@ -37,7 +39,11 @@ builder.Services.AddQuartz(q =>
     );
     QuartzScheduller.GetConfiguration<GenerateThumbNailJob>(q, jobConfig2);
 });
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.File("logs/app.log", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
+builder.Host.UseSerilog();
 // Quartz Hosted Service
 builder.Services.AddQuartzHostedService(options =>
 {

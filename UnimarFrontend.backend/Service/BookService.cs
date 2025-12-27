@@ -34,6 +34,7 @@ namespace UnimarFrontend.backend.Service
         {
             Console.WriteLine("===========================QUARTZ===============================");
             Console.WriteLine("GetLastBook");
+
             if (!_dbContext.Books.Any())
                 return DateTime.Now.AddYears(-5);
 

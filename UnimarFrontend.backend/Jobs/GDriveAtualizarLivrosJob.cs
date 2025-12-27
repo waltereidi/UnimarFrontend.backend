@@ -18,14 +18,23 @@ namespace UnimarFrontend.backend.Jobs
 
         public async Task Execute(IJobExecutionContext context)
         {
-            Console.WriteLine("===========================QUARTZ===============================");
-            Console.WriteLine("Execute");
-            var lastBook = _service.GetLastBook();
-            
-            await _service.AddBookRange(lastBook);
-            Console.WriteLine("Execute end");
-            // exemplo de uso
-            // await _service.AtualizarLivrosAsync();
+            try
+            {
+                Console.WriteLine("===========================QUARTZ===============================");
+                Console.WriteLine("Execute");
+                _logger.LogInformation("GDriveAtualizar iniciou");
+                var lastBook = _service.GetLastBook();
+
+                await _service.AddBookRange(lastBook);
+                Console.WriteLine("Execute end");
+                // exemplo de uso
+                // await _service.AtualizarLivrosAsync();
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+
         }
     }
 }
