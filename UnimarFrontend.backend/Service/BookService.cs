@@ -48,7 +48,7 @@ namespace UnimarFrontend.backend.Service
             var dto = GetFilesFromDrive(lastBookTime);
 
             var books = dto.BooksDrive.Select(s => s.book);
-            if (books != null && books.Count() == 0)
+            if (books == null || books.Count() == 0)
                 return 0;
 
             Console.WriteLine("AddBookRange42");
