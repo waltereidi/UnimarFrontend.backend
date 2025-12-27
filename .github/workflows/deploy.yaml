@@ -1,0 +1,67 @@
+name: Deploy Local Runner .NET 8
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build (.NET 8)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Configurar .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restaurar dependências
+        run: dotnet restore UnimarFrontend.backend.sln
+
+      - name: Compilar
+        run: dotnet build UnimarFrontend.backend.sln -c Release --no-restore
+
+      - name: Publicar
+        run: dotnet publish UnimarFrontend.backend.sln -c Release -o publish
+
+      - name: Upload artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-publish
+          path: publish
+  deploy:
+    name: Deploy (Local Server)
+    runs-on: self-hosted
+    needs: build
+    environment: production
+
+    steps:
+      - name: Download artefato
+        uses: actions/download-artifact@v4
+        with:
+          name: app-publish
+          path: publish
+
+      - name: Deploy local
+        env:
+          DEPLOY_PATH: ${{ vars.PATH }}
+        run: |
+          echo "Iniciando deploy local..."
+          echo "Destino: $DEPLOY_PATH"
+
+          sudo mkdir -p "$DEPLOY_PATH"
+
+          sudo rsync -av --delete publish/ "$DEPLOY_PATH/"
+
+          echo "Reiniciando serviço..."
+          sudo systemctl restart dotnet-app.service
+
+          echo "✅ Deploy finalizado com sucesso!"
