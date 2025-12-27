@@ -24,7 +24,7 @@ builder.Services.AddQuartz(q =>
     
     var jobConfig = new QuartzScheduller.JobConfiguration(
         jobName: "AdicionarLivrosJob",
-        ce: new CronExpression("0 0 0 ? * *")
+         ce: new CronExpression("0 0/5 * ? * *")
 
     );
     QuartzScheduller.GetConfiguration<GDriveAtualizarLivrosJob>(q, jobConfig) ;
