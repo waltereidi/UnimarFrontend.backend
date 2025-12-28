@@ -16,6 +16,7 @@ namespace UnimarFrontend.backend.Configuration
         private readonly string _configFileName = "credentials.json";
         public GoogleCredentialsSetup()
         {
+            Console.WriteLine($"GoogleCredentialsSetup {_projectDir}");
             _projectDir = new
                 (
                     Path.Combine(
@@ -24,6 +25,7 @@ namespace UnimarFrontend.backend.Configuration
                 );
 
             string credentialPath = Path.Combine("Configuration", _configFileName);
+            Console.WriteLine($"GoogleCredentialsSetup {credentialPath}");
             if (File.Exists(credentialPath))
             {
                 using (var stream = new FileStream(credentialPath, FileMode.Open, FileAccess.Read))
