@@ -76,8 +76,9 @@ namespace UnimarFrontend.backend.Service
         {
             Console.WriteLine("===========================QUARTZ===============================");
             Console.WriteLine("GetFilesFromDrive");
-
+            Console.WriteLine($"GetFilesFromDrive lastbookTime = {lastBookTime.ToString()}");
             var drive = new GoogleDriveRead();
+            Console.WriteLine($"GetFilesFromDrive lastbookTime = {lastBookTime.ToString()}");
             var dto = new GoogleDriveBookFileDTO();
             Console.WriteLine($"GetFilesFromDrive lastbookTime = {lastBookTime.ToString()}");
             bool isEmpty = false;
