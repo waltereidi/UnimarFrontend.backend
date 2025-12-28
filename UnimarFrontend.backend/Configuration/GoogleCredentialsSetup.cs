@@ -16,14 +16,14 @@ namespace UnimarFrontend.backend.Configuration
         private readonly string _configFileName = "credentials.json";
         public GoogleCredentialsSetup()
         {
-            Console.WriteLine($"GoogleCredentialsSetup {_projectDir}");
+            
             _projectDir = new
                 (
                     Path.Combine(
                         Directory.GetParent(AppContext.BaseDirectory)
                             .Parent.Parent.Parent.Parent.FullName, "UnimarFrontend.GoogleDriveApi")
                 );
-
+            Console.WriteLine($"GoogleCredentialsSetup {_projectDir}");
             string credentialPath = Path.Combine("Configuration", _configFileName);
             Console.WriteLine($"GoogleCredentialsSetup {credentialPath}");
             if (File.Exists(credentialPath))
