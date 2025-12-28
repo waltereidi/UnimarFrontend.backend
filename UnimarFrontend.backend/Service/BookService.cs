@@ -79,6 +79,7 @@ namespace UnimarFrontend.backend.Service
 
             var drive = new GoogleDriveRead();
             var dto = new GoogleDriveBookFileDTO();
+            Console.WriteLine($"GetFilesFromDrive lastbookTime = {lastBookTime.ToString()}");
             bool isEmpty = false;
             while(!isEmpty)
             {
