@@ -15,7 +15,7 @@ namespace UnimarFrontend.backend.Service
         private readonly AppDbContext _dbContext;
         private readonly IConfiguration _configuration;
 
-        public BookService(AppDbContext dbContext)
+        public BookService(AppDbContext dbContext  )
         {
             _dbContext = dbContext;
 
@@ -84,6 +84,7 @@ namespace UnimarFrontend.backend.Service
             {
                 try
                 {
+                    Console.WriteLine($"GetFilesFromDrive lastbookTime = {lastBookTime.ToString()}");
                     var files = drive.GetDriveFilesFromCreationDate(lastBookTime, DateTime.Now);
 
                     isEmpty = (files == null || files.Count() == 0);

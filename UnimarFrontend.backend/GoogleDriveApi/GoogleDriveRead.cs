@@ -94,6 +94,8 @@ namespace UnimarFrontend.backend.GoogleDriveApi
             request.OrderBy = "createdTime";
             SetFields(request);
             request.PageToken = _pageToken;
+            Console.WriteLine($"GetFilesFromDrive query= {request.Q.ToString()}");
+
             var fileList = ExecuteRequest(request);
             var result = fileList.Files;
             

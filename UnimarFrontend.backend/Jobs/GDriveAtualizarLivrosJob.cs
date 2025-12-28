@@ -24,7 +24,7 @@ namespace UnimarFrontend.backend.Jobs
                 Console.WriteLine("Execute");
                 _logger.LogInformation("GDriveAtualizar iniciou");
                 var lastBook = _service.GetLastBook();
-
+                _logger.LogInformation($"GDriveAtualizar data inicio = {lastBook.ToString()}");
                 await _service.AddBookRange(lastBook);
                 Console.WriteLine("Execute end");
                 // exemplo de uso
