@@ -19,18 +19,12 @@ namespace UnimarFrontend.backend.Service
         {
             _dbContext = dbContext;
 
-            _configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false)
-                .AddEnvironmentVariables()
-                .Build();
 
-#if DEBUG
-_configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("appsettings.Development.json", optional: true)
-                .AddEnvironmentVariables()
-                .Build();
-#endif
+            _configuration = new ConfigurationBuilder()
+                            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                            .AddJsonFile("appsettings.Development.json", optional: true)
+                            .AddEnvironmentVariables()
+                            .Build();
         }
 
 
