@@ -116,10 +116,12 @@ namespace UnimarFrontend.backend.Service
 
         public void GenerateThumbNail(Book book)
         {
+            Console.WriteLine("BookService GenerateThumbNail 119");
             var config = _configuration.GetSection("FileStorage").GetChildren();
             var path = config.ElementAt(0).Value;
 
             var pathThumbnail = config.ElementAt(1).Value;
+            Console.WriteLine($"BookService GenerateThumbNail 124 {pathThumbnail}");
             if (string.IsNullOrEmpty(path) || string.IsNullOrEmpty(pathThumbnail))
             {
                 Console.WriteLine("PdfPig não está configurado");
@@ -130,6 +132,7 @@ namespace UnimarFrontend.backend.Service
 
             var bgd = book.BookGoogleDrives.FirstOrDefault();
             var gservice = new GoogleDriveDownload(bgd.GoogleDriveId, book.Title, path);
+            Console.WriteLine($"BookService GenerateThumbNail 135");
             var file = gservice.Start();
             if(file.Exists)
             {
@@ -152,6 +155,7 @@ namespace UnimarFrontend.backend.Service
                 _dbContext.SaveChanges();
 
             }
+            Console.WriteLine($"BookService GenerateThumbNail 158");
             var thumb= pdfPigService.GetPdfPage(file, new DirectoryInfo(pathThumbnail));
             if(thumb.Exists)
             {
