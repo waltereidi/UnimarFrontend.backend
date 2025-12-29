@@ -32,6 +32,7 @@ namespace UnimarFrontend.backend.Jobs
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
+                Console.WriteLine($"{ex.Message}");
             }
 
 

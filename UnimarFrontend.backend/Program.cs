@@ -25,7 +25,7 @@ builder.Services.AddQuartz(q =>
     
     var jobConfig = new QuartzScheduller.JobConfiguration(
         jobName: "AdicionarLivrosJob",
-         ce: new CronExpression("0 0/5 * ? * *")
+         ce: new CronExpression("0 0 1 * * ?")
 
     );
 
@@ -34,7 +34,7 @@ builder.Services.AddQuartz(q =>
 
     var jobConfig2 = new QuartzScheduller.JobConfiguration(
         jobName: "GerarThumbJob",
-        ce: new CronExpression("0 0/5 * ? * *")
+        ce: new CronExpression("0 0/1 * ? * *")
 
     );
     QuartzScheduller.GetConfiguration<GenerateThumbNailJob>(q, jobConfig2);
