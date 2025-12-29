@@ -19,17 +19,21 @@ namespace UnimarFrontend.backend.Service
         {
             _dbContext = dbContext;
 
-
             _configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
+
+#if DEBUG
+_configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile("appsettings.Development.json", optional: true)
                 .AddEnvironmentVariables()
                 .Build();
-
-
+#endif
         }
 
-        
+
         public DateTime GetLastBook()
         {
             Console.WriteLine("===========================QUARTZ===============================");
