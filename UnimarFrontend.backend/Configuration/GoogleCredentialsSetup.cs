@@ -40,6 +40,7 @@ _projectDir = new
                 }
             }
 #endif
+            Console.WriteLine($"GoogleCredentialsSetup {Path.Combine(_projectDir.FullName, "Configuration", _configFileName)}");
             using (var stream = new FileStream(Path.Combine(_projectDir.FullName ,"Configuration",_configFileName), FileMode.Open, FileAccess.Read))
             {
                 _credentials = GoogleCredential.FromStream(stream)
