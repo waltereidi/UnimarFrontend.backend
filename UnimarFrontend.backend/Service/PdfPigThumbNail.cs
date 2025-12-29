@@ -7,6 +7,7 @@ namespace UnimarFrontend.backend.Service
     {
         public FileInfo GetPdfPage(FileInfo file, DirectoryInfo output  )
         {
+            Console.WriteLine($"PdfPigThumbNail GetPdfPage 10 {output.FullName}");
             using (var pdf = PdfDocument.Open(file.FullName))
             {
                 var page = pdf.GetPages().FirstOrDefault();
