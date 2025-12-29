@@ -19,16 +19,18 @@ namespace UnimarFrontend.backend.Configuration
             Console.WriteLine($"GoogleCredentialsSetup {Directory.GetParent(AppContext.BaseDirectory)}");
             Console.WriteLine($"GoogleCredentialsSetup {Directory.GetParent(AppContext.BaseDirectory)
                             .Parent.Parent.Parent.Parent.FullName}");
+            _projectDir = Directory.GetParent(AppContext.BaseDirectory);
 
-            _projectDir = new
+#if DEBUG
+_projectDir = new
                 (
                     Path.Combine(
                         Directory.GetParent(AppContext.BaseDirectory)
                             .Parent.Parent.Parent.Parent.FullName, "UnimarFrontend.GoogleDriveApi")
                 );
-            Console.WriteLine($"GoogleCredentialsSetup {_projectDir}");
+
+
             string credentialPath = Path.Combine("Configuration", _configFileName);
-            Console.WriteLine($"GoogleCredentialsSetup {credentialPath}");
             if (File.Exists(credentialPath))
             {
                 using (var stream = new FileStream(credentialPath, FileMode.Open, FileAccess.Read))
@@ -37,7 +39,7 @@ namespace UnimarFrontend.backend.Configuration
                         .CreateScoped(DriveService.ScopeConstants.Drive);
                 }
             }
-
+#endif
             using (var stream = new FileStream(Path.Combine(_projectDir.FullName ,"Configuration",_configFileName), FileMode.Open, FileAccess.Read))
             {
                 _credentials = GoogleCredential.FromStream(stream)
