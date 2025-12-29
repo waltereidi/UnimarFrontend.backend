@@ -39,6 +39,7 @@ namespace UnimarFrontend.backend.GoogleDriveApi
                 request.Download(memoryStream);
                 var filePath = Path.Combine(_request.output.FullName, _request.fileName );
                 // Salva no caminho especificado
+                Console.WriteLine($"GoogleDriveDownload Start 42 {filePath}");
                 using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
                 {
                     memoryStream.WriteTo(fileStream);
