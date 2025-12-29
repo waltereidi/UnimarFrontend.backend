@@ -20,7 +20,7 @@ namespace UnimarFrontend.backend.Service
             _dbContext = dbContext;
 
             _configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("appsettings.json", optional: false)
                 .AddEnvironmentVariables()
                 .Build();
 
