@@ -22,13 +22,14 @@ namespace UnimarFrontend.backend.Jobs
         {
             try
             {
-                //Console.WriteLine("===========================QUARTZ===============================");
-                //Console.WriteLine("Execute");
+                Console.WriteLine("===========================QUARTZ===============================");
+                Console.WriteLine("Execute Thumbnail");
                 var result = _service.GetBookWithouthThumbNail();
                 if (result == null)
                     return;
+                Console.WriteLine("Thumbnail 29");
                 _service.GenerateThumbNail(result);
-
+                
                 //var lastBook = _service.GetBookWithouthThumbNail();
                 //await _service.AddBookRange(lastBook);
                 //Console.WriteLine("Execute end");
