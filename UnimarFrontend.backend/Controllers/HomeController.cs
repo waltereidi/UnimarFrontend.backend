@@ -39,6 +39,7 @@ namespace UnimarFrontend.backend.Controllers
             }catch(Exception ex)
             {
                 Console.Write(ex.Message);
+                return null;
             }
             
         }
