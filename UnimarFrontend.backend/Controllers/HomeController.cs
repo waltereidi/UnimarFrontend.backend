@@ -25,15 +25,22 @@ namespace UnimarFrontend.backend.Controllers
         [HttpGet("GetBooks")]
         public IEnumerable<Book> GetBooks(int page)
         {
-            var result = _context.Books
+            try
+            {
+                var result = _context.Books
                 .Include(b => b.BookComments)
                 .Include(b => b.BookFileStorages)
                 .Skip(page * 5)
                 .Take(5)
-                .OrderByDescending(o=>o.CreatedAt )
+                .OrderByDescending(o => o.CreatedAt)
                 .ToList();
 
-            return result;
+                return result;
+            }catch(Exception ex)
+            {
+                Console.Write(ex.Message);
+            }
+            
         }
         [Authorize]
         [HttpPost("CreateComment")]
