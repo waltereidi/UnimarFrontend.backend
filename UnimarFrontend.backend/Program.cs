@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Quartz;
 using Serilog;
 using System.Text;
+using System.Text.Json.Serialization;
 using UnimarFrontend.backend.DTO;
 using UnimarFrontend.backend.Jobs;
 using UnimarFrontend.backend.Service;
@@ -86,7 +87,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            options.JsonSerializerOptions.WriteIndented = true;
+        }); ;
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
