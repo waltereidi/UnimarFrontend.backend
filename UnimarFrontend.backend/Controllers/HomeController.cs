@@ -40,6 +40,7 @@ namespace UnimarFrontend.backend.Controllers
                         b.ThumNail = b.ThumNail.Replace(".jpg", ".png.png");
                     else if(b.ThumNail.Contains(".png"))
                         b.ThumNail = b.ThumNail.Replace(".png", ".png.png");
+                    b.ThumNail = "https://file.livrosexpo.site/ThumbNail/"+b.ThumNail;
                 });
 
                 return result;
