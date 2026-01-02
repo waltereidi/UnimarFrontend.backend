@@ -55,7 +55,7 @@ builder.Services.Configure<JwtSettingsDTO>(
     builder.Configuration.GetSection("JwtSettings"));
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettingsDTO>();
-
+Console.WriteLine($"JWT Issuer: {jwtSettings.Issuer}");
 // Add JwtService
 builder.Services.AddSingleton<JwtService>();
 
