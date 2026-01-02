@@ -32,7 +32,7 @@ namespace UnimarFrontend.backend.Controllers
                 .Include(b => b.BookFileStorages)
                 .Skip(page * 5)
                 .Take(5)
-                .OrderBy(o => o.CreatedAt)
+                .OrderByDescending(o => o.Id)
                 .ToList();
                 result.ForEach(b =>
                 {
