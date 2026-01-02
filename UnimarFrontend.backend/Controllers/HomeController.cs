@@ -38,7 +38,7 @@ namespace UnimarFrontend.backend.Controllers
                 {
                     if(b.ThumNail.Contains(".jpg"))
                         b.ThumNail = b.ThumNail.Replace(".jpg", ".png.png");
-                    if(b.ThumNail.Contains(".png"))
+                    else if(b.ThumNail.Contains(".png"))
                         b.ThumNail = b.ThumNail.Replace(".png", ".png.png");
                 });
 
