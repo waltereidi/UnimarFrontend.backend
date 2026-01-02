@@ -34,6 +34,13 @@ namespace UnimarFrontend.backend.Controllers
                 .Take(5)
                 .OrderByDescending(o => o.CreatedAt)
                 .ToList();
+                result.ForEach(b =>
+                {
+                    if(b.ThumNail.Contains(".jpg"))
+                        b.ThumNail = b.ThumNail.Replace(".jpg", ".png.png");
+                    if(b.ThumNail.Contains(".png"))
+                        b.ThumNail = b.ThumNail.Replace(".png", ".png.png");
+                });
 
                 return result;
             }catch(Exception ex)
